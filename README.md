@@ -1,7 +1,9 @@
-# automated-Sales-predictions
-Integrated data ingestion into hdfs, data cleaning, hive queries, Machine Learning model, report generation, and <br>
+## Future-Sales-predictions Using Big Data Techenology and Automation Using Airflow Dags
+Integrated data ingestion into hdfs, data cleaning, hive queries, Machine Learning model, report generation, and 
 automated all these things using AirflowDag.<br>
-Big Data Mini-Project : Future sales prediction<br>
+
+
+### Big Data Mini-Project : Future sales prediction<br>
 
 Batch: PG-DBDA,Sept-2021 ACTS,Pune <br>
 Name : Wangawar Rahul Narsimalu<br>
