@@ -1,0 +1,48 @@
+from airflow import DAG
+from airflow.operators.bash import BashOperator
+from airflow.utils.dates import days_ago
+
+args = {
+    'owner': 'rahulw'
+}
+
+dag = DAG(
+    dag_id='MiniProject_Future_Sales_Prediction',
+    default_args=args,
+    start_date=days_ago(1),
+    schedule_interval='0 0 * * *',
+    tags=['spark-submit', 'rahul', 'miniproject']
+)
+
+create_directories = BashOperator(task_id="create_dirs",
+                                  bash_command="bash /home/rahulw/PycharmProjects/pythonProject/MiniProject_Predict_Future_Sales/final_submit/create_dirs.sh ",
+                                  dag=dag)
+
+MapReduce_job = BashOperator(task_id="MapReduce_data_ingestion_to_dq_good",
+                                  bash_command="hadoop jar /home/rahulw/eclipse-workspace/Miniproject_FutureSales_DQ/target/Miniproject_FutureSales_DQ-0.0.1-SNAPSHOT.jar com.demo.Miniproject_FutureSales_DQ.DQ_Job /mini_project/raw/stage/sales_train.csv /mini_project/raw/dq_good/ ",
+                                  dag=dag)
+
+tmpToHdfsStage_1 = BashOperator(
+    task_id='LocaToHdfs_Data_ingestion',
+    bash_command='hdfs dfs -put /home/rahulw/PycharmProjects/pythonProject/MiniProject_Predict_Future_Sales/Temp/sales_train.csv /mini_project/raw/stage/ ',
+    dag=dag)
+
+dq_goodToPersist = BashOperator(
+    task_id='Convert_format_into_parquet',
+    bash_command='python /home/rahulw/PycharmProjects/pythonProject/MiniProject_Predict_Future_Sales/step_2_dq_good_to_persist_parquet.py ',
+    dag=dag)
+
+createDbAndTables = BashOperator(
+    task_id='create_DB_ext_tables_partions_Buckets',
+    bash_command='bash /home/rahulw/PycharmProjects/pythonProject/MiniProject_Predict_Future_Sales/step_3_create_db_tables_partitions.sh ',
+    dag=dag)
+
+reports = BashOperator(
+    task_id='create_reports',
+    bash_command='bash /home/rahulw/PycharmProjects/pythonProject/MiniProject_Predict_Future_Sales/Reports.sh ',
+    dag=dag
+)
+
+
+
+create_directories >> tmpToHdfsStage_1 >> MapReduce_job >> dq_goodToPersist >> createDbAndTables >> reports 
