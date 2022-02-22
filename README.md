@@ -1,12 +1,12 @@
 # automated-Sales-predictions
 Integrated data ingestion into hdfs, data cleaning, hive queries, Machine Learning model, report generation, and automated all these things using AirflowDag.
-Big Data Mini-Project : Future sales prediction
+Big Data Mini-Project : Future sales prediction<br>
 
-Batch: PG-DBDA,Sept-2021 ACTS,Pune
-Name : Wangawar Rahul Narsimalu
-PRN :  210940125055
+Batch: PG-DBDA,Sept-2021 ACTS,Pune <br>
+Name : Wangawar Rahul Narsimalu<br>
+PRN :  210940125055<br>
 
-Following are the steps performed for miniproject execution:
+Following are the steps performed for miniproject execution:<br>
 
 Step 1 ==> Ingested data in hdfs at /mini_project/raw/stage/
 
