@@ -20,3 +20,4 @@ Step 3 ==> Used Spark read and write to read data from dq_good and write data in
 Step 4 ==> create database miniproject.db in hive warehouse 
 
 Step 5 ==> Created External table, partitioned table, Bucketted table in database.
+
